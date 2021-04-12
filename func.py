@@ -1,5 +1,6 @@
 import random
 import json
+import nltk
 from cleaner import config_clean, clean
 
 
@@ -15,6 +16,16 @@ def get_config(path: str):
     return config
 
 
+def typo_check(text: str, example: str):
+    """
+    Checks text for typos and matches against the example
+    :param text: text for checking
+    :param example: example to matching against the text
+    :return: True or False, match or didn`t match
+    """
+    return nltk.edit_distance(text, example) / len(example) < 0.35
+
+
 def get_response(question: str, config: dict):
     """
     Checks intents in config for examples, that match the question\n
@@ -25,5 +36,7 @@ def get_response(question: str, config: dict):
     question = clean(question)
     for intent, value in config['intents'].items():
         for example in value['examples']:
-            if question == clean(example):
+            if typo_check(question, example):
                 return random.choice(value['responses'])
+    else:
+        return 'я тебя не понимаю'
