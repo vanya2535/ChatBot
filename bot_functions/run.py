@@ -1,7 +1,7 @@
 import random
 import json
 import nltk
-from cleaner import config_clean, clean
+from bot_functions.cleaner import config_clean, clean
 
 
 def get_config(path: str):
@@ -37,6 +37,6 @@ def get_response(question: str, config: dict):
     for intent, value in config['intents'].items():
         for example in value['examples']:
             if typo_check(question, example):
-                return random.choice(value['responses'])
+                return random.choice(value['responses']).capitalize()
     else:
-        return 'я тебя не понимаю'
+        return 'Я тебя не понимаю'
