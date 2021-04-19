@@ -2,6 +2,16 @@ import random
 import json
 import nltk
 from bot_functions.cleaner import config_clean, clean
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.ensemble import RandomForestClassifier
+
+
+def CV(config: dict):
+    classifier = RandomForestClassifier()
+    vectorizer = CountVectorizer()
+    x = []
+    y = []
+
 
 
 def get_config(path: str):
