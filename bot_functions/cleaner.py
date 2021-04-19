@@ -1,3 +1,6 @@
+import nltk
+
+
 def config_clean(config: dict):
     """
     Cleans config from extra intents, examples or respnses\n
@@ -28,7 +31,10 @@ def clean(text: str):
     :param text: string of text for cleaning
     :return: clean text, whore symbols are in 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя '
     """
-    return ''.join([symbol for symbol in text.lower() if symbol in 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя '])
+    return ''.join([symbol for symbol in text.lower() if symbol in 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя- '])
+
+
+'def nltk_clean'
 
 
 def list_cleaner(data: list):
@@ -46,3 +52,32 @@ def list_cleaner(data: list):
     for id in for_delete:
         data.pop(id)
     return list(set(data))
+
+
+def typo_check(text: str, example: str):
+    """
+    Checks text for typos and matches against the example
+    :param text: text for checking
+    :param example: example to matching against the text
+    :return: True or False, match or didn`t match
+    """
+    return nltk.edit_distance(text, example) / len(example) < 0.35
+
+
+def nltk_list_cleaner(data: list):
+    """
+    Changing your list of strings, removes extra words
+    :param data: list of strings
+    :return: list of strings, cleaned from extra words
+    """
+    data = list_cleaner(data)
+    for_delete = []
+    for elem_id in range(len(data)):
+        for id in range(elem_id + 1, len(data)):
+            if typo_check(data[elem_id], data[id]):
+                for_delete.append(id)
+    for_delete = list(set(for_delete))
+    for_delete.reverse()
+    for id in for_delete:
+        data.pop(id)
+    return data

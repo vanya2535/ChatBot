@@ -1,17 +1,8 @@
 import random
 import json
-import nltk
-from bot_functions.cleaner import config_clean, clean
+from bot_functions.cleaner import config_clean, clean, typo_check
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
-
-
-def CV(config: dict):
-    classifier = RandomForestClassifier()
-    vectorizer = CountVectorizer()
-    x = []
-    y = []
-
 
 
 def get_config(path: str):
@@ -24,16 +15,6 @@ def get_config(path: str):
         config = json.load(config_file)
     config = config_clean(config)
     return config
-
-
-def typo_check(text: str, example: str):
-    """
-    Checks text for typos and matches against the example
-    :param text: text for checking
-    :param example: example to matching against the text
-    :return: True or False, match or didn`t match
-    """
-    return nltk.edit_distance(text, example) / len(example) < 0.35
 
 
 def get_response(question: str, config: dict):
