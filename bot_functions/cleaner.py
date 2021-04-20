@@ -93,3 +93,13 @@ def nltk_list_clean(data: list):
     for id in for_delete:
         data.pop(id)
     return data
+
+
+def str_list(string: str):
+    """
+    Transform string of words to list of words\n
+    :param string: string of words
+    :return: list of words
+    """
+    st_list = string.split(', ')
+    return st_list
