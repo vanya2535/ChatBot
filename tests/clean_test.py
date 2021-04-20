@@ -9,5 +9,3 @@ for value in config['intents'].values():
     value['responses'] = nltk_list_cleaner(value['responses'])
     value['examples'] = nltk_list_cleaner(value['responses'])
 '''
-
-print(timeit(nltk_list_cleaner, number=1))

@@ -1,2 +1,4 @@
 .idea/
-tests.py
+tests/clean_test.py
+tests/test_config.json
+tests/tests.py
